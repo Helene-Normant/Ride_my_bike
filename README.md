@@ -2,13 +2,14 @@
 
 Data visualisation 
 
-- Api velib Paris 
-- Api Mapbox 
+- API velib Paris 
+- API Mapbox 
 - Gauge library 
 
 JS/ CSS/ HTML/ Bootstrap
 
 > Front end : gauge design/ button 
+
 > Back end : pair programming for the loop/ API connexion 
 
 
