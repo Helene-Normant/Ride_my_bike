@@ -1,0 +1,112 @@
+.container{
+    padding-top: 60px;
+    padding-bottom: 150px;
+}
+.col{
+    text-align:center
+}
+
+.audio{
+    text-align: right;
+    padding: 60px
+}
+
+.videoDiv2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    margin-bottom: 100px;
+    padding: 350px 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+.foot{
+    background-color: black;
+    position:static;
+    height: 150px;
+}
+
+#velo {
+  padding-left: 240px;
+  word-spacing: 150px;
+}
+
+/* Marker position */
+.marker1 {
+  background-image: url('bootstrap/custom/png/pin.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/*style bubble*/
+
+.node-info {
+  position: absolute;
+}
+
+ul {
+  list-style: none;
+}
+
+.info-title {
+  padding: 0.2em 0.5em;
+  background: #ececec;
+}
+
+.info-content {
+  background: #fff;
+}
+
+.info-content>i {
+  display: inline-block;
+  padding: 0.5em;
+  margin: 0 0.25em;
+  vertical-align: middle;
+}
+
+.info-content-label {
+  margin-right: 1em;
+}
+
+.bg-normal {
+  background: #2296F4;
+}
+
+.bg-abnormal {
+  background: #EA3344;
+}
+
+#infobubble{
+      margin-top: 50px;
+      padding-top: 95px;
+      margin-left: auto;
+      margin-right: auto;
+      color: white;
+      background-color: #75cff0;
+      box-sizing: border-box;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+}
+
+p {
+  margin-top: 30px;
+  font-weight: bolder ;
+}

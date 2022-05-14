@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- MapBoxAPI -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
+  <!-- Bootstrap CSS -->
+  <link href="bootstrap/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <!--justGage library-->
+  <script src="bootstrap/justgage/raphael-2.1.4.min.js"></script>
+  <script src="bootstrap/justgage/justgage.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/d3/3.5.17/d3.min.js"></script>
+
+  <title>Get me the closest bike, bro!</title>
+</head>
+
+<body>
+  <header>
+    <div class="videoDiv2">
+      <h1 id="h1">Find the closest bike<br></h1>
+      <button onclick="main()" type="button" class="btn btn-light" class="btn btn-secondary btn-lg">Localise me</button>
+      <video class="video-bg" preload="" autoplay="" muted="" playsinline="" loop="">
+        <source src="video/t12.webm" type="video/webm">
+        <source src="chasing_a_bicycle.mp4" type="video/mp4">
+      </video>
+    </div>
+  </header>
+
+     <!-- Optional JavaScript; choose one of the two! -->
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div id="datapage">
+        <div id="data_station" class="d-flex justify-content-between">
+          <div id="station_details" style=' padding-top: 50px; padding-left: 10px; min-width: 50%; height: 500px; border-radius: 0px; box-shadow: 0 0 15px #E6E4E0;'>
+            <div class="row">
+              <h3 id="velo">BIKES DOCKS</h3>
+              <div class="col col-sm-3">
+                <img src="bootstrap/custom/png/bikenew.png" style='height: 70px; width: 70px; margin-left: 197px;' class="img-fluid" alt="...">
+              </div>
+              <div class="col col-sm-3">
+                <img src="bootstrap/custom/png/mecanic-bikenew.png" style='height: 70px; width: 70px; margin-left: 197px;' class="img-fluid" alt="...">
+              </div>
+              <div class="col col-sm-3">
+                <img src="bootstrap/custom/png/dock.png" style='height: 70px; width: 70px; margin-left: 197px;' class="img-fluid" alt="...">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-sm-3">
+                <p id="name_station1"></p>
+                <p id="name_station2"></p>
+                <p id="name_station3"></p>
+              </div>
+              <div class="col col-sm-3">
+                <div id="gauge"></div>
+                <div id="gauge-etg2"></div>
+                <div id="gauge-etg3"></div>
+
+              </div>
+              <div class="col col-sm-3">
+                <div id="gauge2"></div>
+                <div id="gauge2-etg2"></div>
+                <div id="gauge2-etg3"></div>
+
+              </div>
+              <div class="col col-sm-3">
+                <div id="gauge3"></div>
+                <div id="gauge3-etg2"></div>
+                <div id="gauge3-etg3"></div>
+
+              </div>
+            </div>
+          </div>
+          <div id='map' style='min-width: 50%; height: 500px; border-radius: 3px; box-shadow: 0 0 15px rgba(0,0,0,0.2);'
+            class="mt-1"></div>
+        </div>
+        <p id="infobubble"></p>
+        <div id="bubble"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="foot">
+      <div class="audio">
+        <audio controls>
+          <source src="bootstrap/music/Queen_-_Bicycle_Race.mp3" type="audio/mpeg">
+        </audio>
+        <p style="color:white">©Copyright 2022 - Anne/Romain/Emma/Hélène - Tous droits réservés </p>
+      </div>
+        </div>
+  </footer>
+
+ <!-- Option 1: Bootstrap Bundle with Popper -->
+ <script src="bootstrap/boostrap/js/bootstrap.bundle.min.js"></script>
+ <!-- <script src="js/module/monscript.js"></script> -->
+ <!-- Option 2: Separate Popper and Bootstrap JS -->
+ <!--
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+ -->
+  <script src="js/module/script.js"></script>
+  <!-- <script type="module" src="js/main.js"></script> -->
+
+</body>
+
+</html>
