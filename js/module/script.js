@@ -1,8 +1,5 @@
 
 
-
-//appel de l'API : https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&q=&rows=3&facet=name&facet=is_installed&facet=is_renting&facet=is_returning&facet=nom_arrondissement_communes&geofilter.distance=${latitude}%2C+${longitude}%2C500
-
 var options = {
   // Asking accuracy in geolocalisation
   enableHighAccuracy: true,
@@ -28,11 +25,11 @@ async function getABike(latitude, longitude) {
 
 // Transform promise of GetABike in object.
 function transformPromise(latitude, longitude) {
-  getABike(latitude, longitude).then(function (result) {
-    //console.log(result)
-    initGauges(result)
-    map(result, latitude, longitude)
-  })
+  getABike(latitude, longitude)
+    .then(function (result) {
+      initGauges(result)
+      map(result, latitude, longitude)
+    })
 }
 
 function success(pos) {
@@ -198,13 +195,12 @@ function map(result, latitude, longitude) {
   })
 
   //Create Position marker
-  // add markers to map
+  // add markers to maps
+  // create a HTML element for each feature
+  const el1 = document.createElement('div');
+  el1.className = 'marker1';
 
-    // create a HTML element for each feature
-    const el1 = document.createElement('div');
-    el1.className = 'marker1';
-
-    // make a marker for each feature and add to the map
+  // make a marker for each feature and add to the map
   const marker1 = new mapboxgl.Marker({ color: 'red' })
     .setLngLat([longitude, latitude])
     .setPopup(new mapboxgl.Popup({ anchor: 'top', offset: 15 })
@@ -216,14 +212,6 @@ function map(result, latitude, longitude) {
   for (let i = 0; i <= 2; i++) {
     let latitudeStation = result.records[i].fields.coordonnees_geo[0]
     let longitudeStation = result.records[i].fields.coordonnees_geo[1]
-    /*let addressName = getAddress(latitudeStation, longitudeStation);
-    let printAddress = async () => {
-      const a = await addressName;
-      console.log(a)
-      return a
-    }
-    console.log(printAddress())
-    //console.log(addressName);*/
     const el = document.createElement('div');
     el.id = 'marker';
     // Create a Marker and add it to the map.
@@ -232,251 +220,16 @@ function map(result, latitude, longitude) {
       .setPopup(new mapboxgl.Popup({ anchor: 'top', offset: 15 })
         .setHTML(`<span><strong>${result.records[i].fields.name}</span></strong><br>
         <span><strong>Distance:</strong> ${Math.floor(result.records[i].fields.dist)} meters</span><br>`))
-        /*<span>${printAddress()}</span>`))*/
       .addTo(map);
   }
 }
 //MAP END//
 
-// D3JS ANIMATION
-
-function Bubble(option) {
-
-  var _defaultOption = {
-    width: 300,
-    height: 300,
-    padding: 1.5,
-    data: '',
-    conEle: ''
-  };
-
-  option = $.extend(true, _defaultOption, option);
-
-  this.width = option.width;
-  this.height = option.height;
-  this.padding = option.padding;
-  this.data = option.data;
-  this.conEle = option.conEle;
-  this.mouseenter = function (d, node) { }
-
-  this.mouseleave = function (d, node) { }
-
-}
-
-Bubble.prototype.init = function () {
-  var that = this,
-    
-    bubble = d3.layout.pack()
-      .sort(null)
-      .size([that.width, that.height])
-      .padding(that.padding),
-    
-    svg = d3.select(that.conEle).append("svg")
-      .attr("width", that.width)
-      .attr("height", that.height);
-  
-  if (typeStr(that.data) == '[object string]') {
-    d3.json(that.data, function (error, data) {
-      if (error) throw error;
-      
-      data = dataHandle(data);
-      render(svg, bubble, that, data);
-    })
-  } else {
-    render(svg, bubble, that, dataHandle(that.data));
-  }
-
-}
-
-function typeStr(obj) {
-  return Object.prototype.toString.call(obj).toLowerCase();
-}
-
-//Returns a flattened hierarchy containing all leaf nodes under the root.
-function classes(root) {
-  var classes = [];                                                                                        //存储结果的数组
-  /*
-   * 自定义递归函数
-   * 第二个参数指传入的json对象
-   */
-  function recurse(name, node) {
-    if (node.children)                                                                                   //如果有孩子结点 （这里的children不是自带的，是json里面有的）
-    {
-      node.children.forEach(function (child) {                                                          //将孩子结点中的每条数据
-        recurse(node.name, child);
-      })
-    }
-    else {
-      //如果自身是孩子结点的，将内容压入数组
-      classes.push({ name: node.name, value: node.size, props: node.props })
-    };
-  }
-  recurse(null, root);
-  return { children: classes };
-}
-
-function render(view, layout, context, data, cb) {
-  var node = view.selectAll(".node")
-    //绑定数据（配置结点）
-    .data(layout.nodes(classes(data))
-      .filter(function (d) {
-        //数据过滤，满足条件返回自身（没孩子返回自身，有孩子不返回，这里目的是去除父节点）
-        return !d.children;
-      }))
-    .enter().append("g")
-    .attr("class", "node")
-    .attr("transform", function (d) {
-      //设定g移动
-      return "translate(" + d.x + "," + d.y + ")";
-    }),
-    usingNodes = node.filter(function (d) {
-      return d.props.using;
-    }),
-    time = +new Date(),
-    duration = 1000,
-    strokeWidth = 0;
-
-  node.append("circle")
-    .attr("r", function (d) {
-      //设置圆的半径
-      return d.r;
-    })
-    .style("fill", function (d) {
-      //为圆形填充颜色
-      return d.props.color;
-    })
-    .style("fill-opacity", 0.8);
-
-  node.append("text")
-    .attr("dy", ".3em")
-    //设置文本对齐
-    .style("text-anchor", "middle")
-    .style("font-size", '10px')
-    .style("fill", "#fff")
-    //根据半径的大小来截取对应长度字符串(很重要)
-    .text(function (d) {
-      return d.name.substring(0, d.r / 3);
-    });
-
-  function animate() {
-    var nowTime = +new Date();
-    if ((nowTime - duration) > time) {
-      time = nowTime;
-      strokeWidth = 0;
-    }
-
-    strokeWidth += 0.6;
-    //strokeWidth >10?strokeWidth=10:strokeWidth += 1;
-    usingNodes.select("circle")
-      .style("stroke-width", strokeWidth + 'px')
-      .style("stroke-opacity", '0.3')
-      .style("stroke", function (d) {
-        return d.props.color;
-      });
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-
-  node.on('mouseenter', function (d) {
-    var node = this;
-    context.mouseenter(d, node);
-  })
-
-  node.on('mouseleave', function (d) {
-    var node = this;
-    context.mouseleave(d, node);
-  })
-
-
-}
-
-
-function dataHandle(data) {
-  var result = {
-    name: "flare",
-    children: []
-  }
-  data.forEach(function (ele) {
-    result.children.push({
-      name: ele.name,
-      size: ele.value,
-      props: ele.props
-    });
-  });
-  return result;
-}
-
-function createInfoTip(d) {
-  var html = '<div class="node-info"><ul>';
-  html += '<li class="info-title"><span>' + d.name + '</span></li>';
-  html += '<li class="info-content"><i class="bg-normal"></i><span class="info-content-label">' +
-    '</span><span class="info-content-text">' + d.value + '</span></li>';
-  html += '<li class="info-content"><i class="bg-abnormal"></i><span class="info-content-label">' +
-    '</span><span class="info-content-text">' + d.props.abnormalFlow + '</span></li>';
-  html += '</ul></div>';
-
-  return html;
-}
-
-
-function createBubbleChart(data) {
-  let total = []
-  for (let i = 0; i < data.records.length; i++) {
-    var entry = {
-      name: data.records[i].fields.name,
-      value: data.records[i].fields.capacity,
-      props: {
-        abnormal: false,
-        abnormalFlow: 0,
-        color: "#75cff0",
-        using: false
-      }
-    };
-    total.push(entry)
-  }
-   var option = {
-    data: total,
-    conEle: '#bubble',
-    width: 1000,
-    height: 800,
-    padding: 1
-    }
-
- var bubble = new Bubble(option);
-
- bubble.mouseenter = function (d, node) {
-   document.getElementById("infobubble").innerHTML = `<span><strong>${d.name}</span></strong><br>
-        <span><strong>Capacity:</strong> ${d.value} bikes</span><br>`
-  var $con = $("#bubble");
-  var rectBox = $con[0].getBoundingClientRect();
-  d3.select(node).style("cursor", "pointer");
-
-  $con.append(createInfoTip(d));
-  $(".node-info").css({
-     left: d3.event.x + 20 - rectBox.left,
-     top: d3.event.y + 20 - rectBox.top
-   }).show();
- }
-bubble.mouseleave = function (d) {
-  $(".node-info").remove();
-}
-  bubble.init()
-}
-
-function getData() {
-  fetch("https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&q=&rows=100&facet=name&facet=is_installed&facet=is_renting&facet=is_returning&facet=nom_arrondissement_communes")
-    .then(response => response.json())
-    .then(data => createBubbleChart(data))
-}
 
 
 function main() {
   //Ask the user for their geolocation
   navigator.geolocation.getCurrentPosition(success, error, options);
-  //initGauges();
-  getData()
 
 }
 
