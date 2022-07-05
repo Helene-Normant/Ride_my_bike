@@ -186,7 +186,7 @@ function initGauges(resultPromise) {
 //MAP BEGING//
 function map(result, latitude, longitude) {
   //Create Map
-  mapboxgl.accessToken = 'pk.eyJ1Ijoib3NsYW5uZSIsImEiOiJja3NweXQ5eDQwN3N1MnBucTRpczY1dXAyIn0.OsggNoy1h_GzZk5ndqunKQ';
+  mapboxgl.accessToken = 'put you token';
   const map = new mapboxgl.Map({
     container: 'map', // container ID
     style: 'mapbox://styles/mapbox/streets-v11', // style URL
