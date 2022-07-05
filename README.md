@@ -12,7 +12,9 @@ Data visualisation for find the closest velib around you in Paris with geolocali
 
 > Front end : gauge design/ button/ logo  
 
-> Back end : pair programming for the loop/ API connexion 
+> Back end : pair programming for the loop/ API connexion
+
+![alt text](https://github.com/Helene-Normant/Ride_my_bike/blob/main/bike_station.png?raw=true)
 
 JS/ CSS/ HTML
 
